@@ -339,7 +339,9 @@ vector<generatedParticle> getGenerated(evioDOMTree& EDT, gBank bank, double verb
 	vector<double> vx;
 	vector<double> vy;
 	vector<double> vz;
-	
+	vector<double> time;
+	vector<int> multiplicity;
+
 	
 	
 	unsigned long sizeOfBank = bank.name.size();
@@ -392,6 +394,16 @@ vector<generatedParticle> getGenerated(evioDOMTree& EDT, gBank bank, double verb
 						const vector<double> *vec = (*cIter)->getVector<double>();
 						for(unsigned int h=0; h<vec->size(); h++) vz.push_back((*vec)[h]);
 					}
+					if(bank.id[i] == vnum && variable->isLeaf() && bank.name[i] == "time")
+					{
+						const vector<double> *vec = (*cIter)->getVector<double>();
+						for(unsigned int h=0; h<vec->size(); h++) time.push_back((*vec)[h]);
+					}
+					if(bank.id[i] == vnum && variable->isLeaf() && bank.name[i] == "multiplicity")
+					{
+						const vector<int> *vec = (*cIter)->getVector<int>();
+						for(unsigned int h=0; h<vec->size(); h++) multiplicity.push_back((*vec)[h]);
+					}
 				}
 			}
 		}
@@ -404,9 +416,12 @@ vector<generatedParticle> getGenerated(evioDOMTree& EDT, gBank bank, double verb
 		generatedParticle part;
 		
 		part.PID = pid[p];
-		part.momentum = G4ThreeVector(px[p], py[p], pz[p]);
-		part.vertex   = G4ThreeVector(vx[p], vy[p], vz[p]);
-		
+		part.momentum     = G4ThreeVector(px[p], py[p], pz[p]);
+		part.vertex       = G4ThreeVector(vx[p], vy[p], vz[p]);
+
+		part.time         = time[p];
+		part.multiplicity = multiplicity[p];
+
 		parts.push_back(part);
 	}
 	

@@ -170,9 +170,11 @@ int main(int argc, char **argv)
 					{
 						string varname = banksMap["generated"].name[i];
 						string vartype = banksMap["generated"].type[i];
-									
+
+
 						for(unsigned p=0; p<parts.size(); p++)
 						{
+							// cout << " p " << p << " " << varname << "  " << vartype << " " << parts[p].getVariableFromStringD(varname) << endl;
 							rTrees["generated"].insertVariable(varname, vartype, parts[p].getVariableFromStringI(varname));
 							rTrees["generated"].insertVariable(varname, vartype, parts[p].getVariableFromStringD(varname));
 						}
