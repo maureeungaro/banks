@@ -49,7 +49,6 @@ class Mevent
 	
 		map<string, vector<hitOutput> > rawBanks;
 		map<string, vector<hitOutput> > dgtBanks;
-	
 };
 
 

@@ -1,6 +1,6 @@
 from init_env import init_environment
 
-env = init_environment("qt5 clas12 clhep evio root geant4 xercesc")
+env = init_environment("qt5 clas12 clhep evio root geant4 xercesc mlibrary")
 
 # library
 lib_sources     = Split("""src/banks.cc""")

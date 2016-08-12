@@ -1,3 +1,15 @@
+8/12/16
+- added mlibrary
+
+5/12/16
+- added time and multiplicity for generated particles
+
+4/1/16
+- putting qt5 first in the dependency list
+
+11/19/15
+- moved banks to gist, frozen devel to 1.2
+
 5/5/15
 - added ADDEVN option for easy log of ROOT chaining (will set add a number to the event number)
 
