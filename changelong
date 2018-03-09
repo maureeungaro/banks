@@ -1,5 +1,6 @@
 3/9/18
 - adapted api for gBank id > gid.
+- using git releases from now on (starting at 1.4)
 
 8/12/16
 - added mlibrary
