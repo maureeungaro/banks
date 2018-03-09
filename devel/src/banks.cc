@@ -87,7 +87,7 @@ map<string, double> getHeaderBank(evioDOMTree& EDT, gBank bank, double verbosity
 				int vnum = variable->num;
 				for(unsigned i=0; i<sizeOfBank; i++)
 				{
-					if(bank.id[i] == vnum && variable->isLeaf())
+					if(bank.gid[i] == vnum && variable->isLeaf())
 					{
 						// timestamp is special, and will be recorded on the key
 						if(bank.type[i] == "Ns")
@@ -161,7 +161,7 @@ vector<hitOutput> getRawIntDataBank(evioDOMTree& EDT, string hitType, map<string
 				int vnum = variable->num;
 				for(unsigned i=0; i<sizeOfBank; i++)
 				{
-					if(rawBank.id[i] == vnum && variable->isLeaf())
+					if(rawBank.gid[i] == vnum && variable->isLeaf())
 					{
 						
 						if(rawBank.getVarType(rawBank.name[i]) == "i")
@@ -262,7 +262,7 @@ vector<hitOutput> getDgtIntDataBank(evioDOMTree& EDT, string hitType, map<string
 				int vnum = variable->num;
 				for(unsigned i=0; i<sizeOfBank; i++)
 				{
-					if(dgtBank.id[i] == vnum && variable->isLeaf())
+					if(dgtBank.gid[i] == vnum && variable->isLeaf())
 					{
 						if(dgtBank.getVarType(dgtBank.name[i]) == "i")
 						{
@@ -359,47 +359,47 @@ vector<generatedParticle> getGenerated(evioDOMTree& EDT, gBank bank, double verb
 				int vnum = variable->num;
 				for(unsigned i=0; i<sizeOfBank; i++)
 				{
-					if(bank.id[i] == vnum && variable->isLeaf() && bank.name[i] == "pid")
+					if(bank.gid[i] == vnum && variable->isLeaf() && bank.name[i] == "pid")
 					{
 						const vector<int> *vec = (*cIter)->getVector<int>();
 						for(unsigned int h=0; h<vec->size(); h++) pid.push_back((*vec)[h]);
 					}
-					if(bank.id[i] == vnum && variable->isLeaf() && bank.name[i] == "px")
+					if(bank.gid[i] == vnum && variable->isLeaf() && bank.name[i] == "px")
 					{
 						const vector<double> *vec = (*cIter)->getVector<double>();
 						for(unsigned int h=0; h<vec->size(); h++) px.push_back((*vec)[h]);
 					}
-					if(bank.id[i] == vnum && variable->isLeaf() && bank.name[i] == "py")
+					if(bank.gid[i] == vnum && variable->isLeaf() && bank.name[i] == "py")
 					{
 						const vector<double> *vec = (*cIter)->getVector<double>();
 						for(unsigned int h=0; h<vec->size(); h++) py.push_back((*vec)[h]);
 					}
-					if(bank.id[i] == vnum && variable->isLeaf() && bank.name[i] == "pz")
+					if(bank.gid[i] == vnum && variable->isLeaf() && bank.name[i] == "pz")
 					{
 						const vector<double> *vec = (*cIter)->getVector<double>();
 						for(unsigned int h=0; h<vec->size(); h++) pz.push_back((*vec)[h]);
 					}
-					if(bank.id[i] == vnum && variable->isLeaf() && bank.name[i] == "vx")
+					if(bank.gid[i] == vnum && variable->isLeaf() && bank.name[i] == "vx")
 					{
 						const vector<double> *vec = (*cIter)->getVector<double>();
 						for(unsigned int h=0; h<vec->size(); h++) vx.push_back((*vec)[h]);
 					}
-					if(bank.id[i] == vnum && variable->isLeaf() && bank.name[i] == "vy")
+					if(bank.gid[i] == vnum && variable->isLeaf() && bank.name[i] == "vy")
 					{
 						const vector<double> *vec = (*cIter)->getVector<double>();
 						for(unsigned int h=0; h<vec->size(); h++) vy.push_back((*vec)[h]);
 					}
-					if(bank.id[i] == vnum && variable->isLeaf() && bank.name[i] == "vz")
+					if(bank.gid[i] == vnum && variable->isLeaf() && bank.name[i] == "vz")
 					{
 						const vector<double> *vec = (*cIter)->getVector<double>();
 						for(unsigned int h=0; h<vec->size(); h++) vz.push_back((*vec)[h]);
 					}
-					if(bank.id[i] == vnum && variable->isLeaf() && bank.name[i] == "time")
+					if(bank.gid[i] == vnum && variable->isLeaf() && bank.name[i] == "time")
 					{
 						const vector<double> *vec = (*cIter)->getVector<double>();
 						for(unsigned int h=0; h<vec->size(); h++) time.push_back((*vec)[h]);
 					}
-					if(bank.id[i] == vnum && variable->isLeaf() && bank.name[i] == "multiplicity")
+					if(bank.gid[i] == vnum && variable->isLeaf() && bank.name[i] == "multiplicity")
 					{
 						const vector<int> *vec = (*cIter)->getVector<int>();
 						for(unsigned int h=0; h<vec->size(); h++) multiplicity.push_back((*vec)[h]);
