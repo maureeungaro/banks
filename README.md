@@ -8,7 +8,9 @@ the env BANKS should point to the location of this README.
 
 To compile:
 
+```
 scons [-jN]  [OPT=1]
+```
 
 where N is the number of processors on your system (optional, for faster compilation) and OPT will optimize the build.
 
