@@ -1,3 +1,6 @@
+3/15/18
+- option SELECT_RAW_VARiABLES can be used to write out only true info variables of interest
+
 3/9/18
 - adapted api for gBank id > gid.
 - using git releases from now on (starting at 1.4)
