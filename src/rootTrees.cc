@@ -34,15 +34,20 @@ void rTree::addVariable(string vname, string vType)
 
 void rTree::insertVariable(string vname, string vType, double v)
 {
-	if(verbosity > 2)
-		if(vDoubles.find(vname) == vDoubles.end() && vType.find("d") == 1)
-			cout << " Error: <double> variable >" << vname << "< not defined." << endl;
-	
-	if(vType.find("d") == 1)
-		vDoubles[vname]->push_back(v);
-	
-	weGotSomething = 1;
+	// variables that are not defined in the tree will not be written out
+	if(vDoubles.find(vname) == vDoubles.end()) {
+		if(verbosity > 2 && vType.find("d") == 1) {
+			cout << " Warning: <double> variable >" << vname << "< is either not defined in the tree or not selected by user to be written out" << endl;
+		}
+		
+	} else {
+		if(vType.find("d") == 1) {
+			vDoubles[vname]->push_back(v);
+			weGotSomething = 1;
+		}
+	}
 }
+	   
 void rTree::insertVariable(string vname, string vType, int v)
 {
 	if(verbosity > 2)
