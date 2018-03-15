@@ -87,7 +87,13 @@ void goptions::setGoptions()
 	optMap["N"].type = 1;
 	optMap["N"].ctgr = "io";
 	
-	
+	// Max Number of events
+	optMap["SELECT_RAW_VARiABLES"].args  = "all";
+	optMap["SELECT_RAW_VARiABLES"].help = "True info variables to be written out, separated by colon.";
+	optMap["SELECT_RAW_VARiABLES"].name = "True info variables to be written out, separated by colon.";
+	optMap["SELECT_RAW_VARiABLES"].type = 1;
+	optMap["SELECT_RAW_VARiABLES"].ctgr = "io";
+
 }
 
 

@@ -48,7 +48,11 @@ int main(int argc, char **argv)
 		
 		// list of banks
 		string banklist = gemcOpt.optMap["B"].args ;
-		
+
+		// list of true info variables
+		string banklist = gemcOpt.optMap["SELECT_RAW_VARiABLES"].args ;
+
+
 		// for now let's get all systems from TEXT factories, variation "original"
 		string factories = "TEXT";
 				
