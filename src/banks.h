@@ -19,6 +19,8 @@ gBank getBank(gBank bank, double verbosity);
 
 // normal banks are just containers of leafs
 map<string, double> getHeaderBank(evioDOMTree& EDT, gBank bank, double verbosity);
+vector<string> getUserHeaderBankNames(evioDOMTree& EDT, gBank bank, double verbosity);
+map<string, double> getUserHeaderBank(evioDOMTree& EDT, gBank bank, vector<string> names, double verbosity);
 
 // integrated raw and digitized banks
 vector<hitOutput> getRawIntDataBank(evioDOMTree& EDT, string hitType, map<string, gBank> *banksMap, double verbosity);
