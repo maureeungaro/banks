@@ -68,7 +68,7 @@ int main(int argc, char **argv)
 		allSystems[whichSystems[b]] = factories;
 		
 		map<string, gBank> banksMap = read_banks(gemcOpt, allSystems);
-		
+
 		// selecting input, output file
 		string inputfile = gemcOpt.optMap["INPUTF"].args ;
 		
@@ -91,7 +91,12 @@ int main(int argc, char **argv)
 			else
 			rTrees["header"].addVariable(banksMap["header"].name[i], "Nd");
 		}
-		
+
+		// user bank definitions
+		// can't add variables until we see the bank size
+		rTrees["userHeader"] = rTree(banksMap["userHeader"].bankName, banksMap["userHeader"].bdescription, verbosity);
+		vector<string> userHeaderNames;
+
 		// generated bank definitions
 		rTrees["generated"] = rTree(banksMap["generated"].bankName, banksMap["generated"].bdescription, verbosity);
 		for(unsigned i=0; i<banksMap["generated"].name.size(); i++)
@@ -100,7 +105,7 @@ int main(int argc, char **argv)
 		
 		// hit banks definitions
 		for(map<string, gBank>::iterator it = banksMap.begin(); it != banksMap.end(); it++) {
-			if(it->first != "header" && it->first != "generated" && it->first != "raws" && it->first != "psummary") {
+			if(it->first != "header" && it->first != "userHeader" && it->first != "generated" && it->first != "raws" && it->first != "psummary") {
 				rTrees[it->first] = rTree(banksMap[it->first].bankName, banksMap[it->first].bdescription, verbosity);
 				for(unsigned i=0; i<banksMap[it->first].name.size(); i++)
 				{
@@ -168,6 +173,25 @@ int main(int argc, char **argv)
 					rTrees["header"].fill();
 				}
 				
+				// userHeader
+				else if (it->first == "userHeader") {
+				        if (userHeaderNames.size() == 0)
+					  {
+					    userHeaderNames = getUserHeaderBankNames (EDT, getBankFromMap("userHeader", &banksMap), 0);
+					    for (vector<string>::iterator it = userHeaderNames.begin(); it != userHeaderNames.end(); it++)
+					      {
+						rTrees["userHeader"].addVariable(*it, "Nd");
+					      }
+					  }
+					map<string, double>  userHeaderBank = getUserHeaderBank(EDT, getBankFromMap("userHeader", &banksMap), userHeaderNames, 0);
+					rTrees["userHeader"].init();
+					
+					for(map<string, double>::iterator userHead_it = userHeaderBank.begin(); userHead_it != userHeaderBank.end(); userHead_it++) {
+					  
+					  rTrees["userHeader"].insertVariable(userHead_it->first, "Nd", userHead_it->second);
+					}
+					rTrees["userHeader"].fill();				  
+				}
 				
 				
 				// generated particles
@@ -193,7 +217,7 @@ int main(int argc, char **argv)
 				
 				//  hit banks
 				else if(it->first != "psummary" && it->first != "raws") {
-					
+				       
 					vector<hitOutput> dgtHits = getDgtIntDataBank(EDT, it->first, &banksMap, verbosity);
 					vector<hitOutput> rawHits = getRawIntDataBank(EDT, it->first, &banksMap, verbosity);
 					

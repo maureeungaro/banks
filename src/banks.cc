@@ -128,6 +128,95 @@ map<string, double> getHeaderBank(evioDOMTree& EDT, gBank bank, double verbosity
 	return thisBank;
 }
 
+vector<string> getUserHeaderBankNames(evioDOMTree& EDT, gBank bank, double verbosity)
+{
+  // Examine data to find out how many variables in userHeader bank and construct list of names
+
+  vector<string> names;
+  unsigned long sizeOfBank = 0;
+
+  evioDOMNodeListP thisBankNode = EDT.getNodeList(tagNumEquals(bank.idtag, 0));
+  
+  for(evioDOMNodeList::const_iterator iter=thisBankNode->begin(); iter!=thisBankNode->end(); iter++)
+    {
+      const evioDOMNodeP node = *iter;
+      if(node->isContainer())
+	{
+	  evioDOMNodeList *variablesNodes = node->getChildList();
+	  for(evioDOMNodeList::const_iterator cIter=variablesNodes->begin(); cIter!=variablesNodes->end(); cIter++)
+	    {
+	      const evioDOMNodeP variable = *cIter;
+	      unsigned vnum = variable->num;
+	      if (variable->isLeaf() && sizeOfBank < vnum)
+		{
+		  sizeOfBank = vnum;
+		}
+	    }
+	}
+    }
+
+  for (unsigned i = 0; i < sizeOfBank; ++i)
+    {
+      string tmp = "userVar" ;
+      if(i<9)        tmp +="00";
+      else if (i<99) tmp +="0";
+      
+      tmp += to_string(i+1);
+      names.push_back (tmp);
+    }
+
+  if (verbosity > 0)
+    {
+      cout << "getUserHeaderBankNames" << endl;
+      for (vector<string>::iterator it = names.begin(); it != names.end(); it++)
+	{
+	  cout << "  > " << (*it) << endl;
+	}
+      cout << endl;
+    }
+
+  return names;
+}
+
+map<string, double> getUserHeaderBank(evioDOMTree& EDT, gBank bank, vector<string> names, double verbosity)
+{
+	map<string, double> thisBank;
+	
+	evioDOMNodeListP thisBankNode = EDT.getNodeList(tagNumEquals(bank.idtag, 0));
+
+	for(evioDOMNodeList::const_iterator iter=thisBankNode->begin(); iter!=thisBankNode->end(); iter++)
+	{
+	  const evioDOMNodeP node = *iter;
+	  if(node->isContainer())
+	    {
+	      evioDOMNodeList *variablesNodes = node->getChildList();
+	      for(evioDOMNodeList::const_iterator cIter=variablesNodes->begin(); cIter!=variablesNodes->end(); cIter++)
+		{
+		  const evioDOMNodeP variable = *cIter;
+		  int vnum = variable->num;
+		  if (variable->isLeaf())
+		    {
+		      const vector<double> *vec = (*cIter)->getVector<double>();
+		      thisBank[names[vnum-1]] = (*vec)[0];				  
+		    }
+		}
+	    }
+	}
+	
+	if(verbosity > 0)
+	{
+		for(map<string, double>::iterator it = thisBank.begin(); it != thisBank.end(); it++)
+		{
+			cout << "  > " << it->first << ": " << it->second << endl;
+		}
+		cout << endl;
+	}
+	
+
+
+	return thisBank;
+}
+
 map<string, vector<hitOutput> > getRawIntDataBanks(evioDOMTree& EDT, vector<string> hitTypes, map<string, gBank> *banksMap, double verbosity)
 {
 	map<string, vector<hitOutput> > rawBanks;
@@ -445,27 +534,5 @@ Mevent::Mevent(evioDOMTree& EDT, vector<string> hitTypes, map<string, gBank> *ba
 	}
 	
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
