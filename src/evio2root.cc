@@ -103,9 +103,20 @@ int main(int argc, char **argv)
 		rTrees["generated"].addVariable(banksMap["generated"].name[i], banksMap["generated"].type[i]);
 		
 		
+		// ancestors bank definitions
+		rTrees["ancestors"] = rTree(banksMap["ancestors"].bankName, banksMap["ancestors"].bdescription, verbosity);
+		for (unsigned i=0; i<banksMap["ancestors"].name.size(); i++)
+		  rTrees["ancestors"].addVariable(banksMap["ancestors"].name[i], banksMap["ancestors"].type[i]);
+		
+		
 		// hit banks definitions
 		for(map<string, gBank>::iterator it = banksMap.begin(); it != banksMap.end(); it++) {
-			if(it->first != "header" && it->first != "userHeader" && it->first != "generated" && it->first != "raws" && it->first != "psummary") {
+			if (it->first != "header" 
+			    && it->first != "userHeader" 
+			    && it->first != "generated" 
+			    && it->first != "ancestors" 
+			    && it->first != "raws" 
+			    && it->first != "psummary") {
 				rTrees[it->first] = rTree(banksMap[it->first].bankName, banksMap[it->first].bdescription, verbosity);
 				for(unsigned i=0; i<banksMap[it->first].name.size(); i++)
 				{
@@ -213,6 +224,29 @@ int main(int argc, char **argv)
 					}
 					rTrees["generated"].fill();
 				}
+				
+				
+				// ancestors
+				else if (it->first == "ancestors") 
+				  {
+				    vector<ancestorInfo> trajs = getAncestors (EDT, getBankFromMap(it->first, &banksMap), verbosity);
+					
+				    rTrees["ancestors"].init();
+					
+				    for (unsigned i=0; i<banksMap["ancestors"].name.size(); i++) 
+				      {
+					string varname = banksMap["ancestors"].name[i];
+					string vartype = banksMap["ancestors"].type[i];
+					
+					
+					for(unsigned p=0; p<trajs.size(); p++) 
+					  {
+					    rTrees["ancestors"].insertVariable(varname, vartype, trajs[p].getVariableFromStringI(varname));
+					    rTrees["ancestors"].insertVariable(varname, vartype, trajs[p].getVariableFromStringD(varname));
+					  }
+				      }
+				    rTrees["ancestors"].fill();
+				  }
 				
 				
 				//  hit banks
