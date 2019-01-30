@@ -29,6 +29,9 @@ vector<hitOutput> getDgtIntDataBank(evioDOMTree& EDT, string hitType, map<string
 // generated particle infos
 vector<generatedParticle> getGenerated(evioDOMTree& EDT, gBank bank, double verbosity);
 
+// ancestor info
+vector<ancestorInfo> getAncestors (evioDOMTree& EDT, gBank bank, double verbosity);
+
 
 map<string, vector<hitOutput> > getRawIntDataBanks(evioDOMTree& EDT, vector<string> hitTypes, map<string, gBank> *banksMap, double verbosity);
 map<string, vector<hitOutput> > getDgtIntDataBanks(evioDOMTree& EDT, vector<string> hitTypes, map<string, gBank> *banksMap, double verbosity);

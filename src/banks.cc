@@ -518,6 +518,108 @@ vector<generatedParticle> getGenerated(evioDOMTree& EDT, gBank bank, double verb
 }
 
 
+vector<ancestorInfo> getAncestors(evioDOMTree& EDT, gBank bank, double verbosity)
+{
+  vector<ancestorInfo> trajs;
+  vector<int> pid;
+  vector<int> tid;
+  vector<int> mtid;
+  vector<double> trackE;
+  vector<double> px;
+  vector<double> py;
+  vector<double> pz;
+  vector<double> vx;
+  vector<double> vy;
+  vector<double> vz;
+  
+  unsigned long sizeOfBank = bank.name.size();
+  
+  evioDOMNodeListP thisBankNode = EDT.getNodeList(tagNumEquals(bank.idtag, 0));
+  for(evioDOMNodeList::const_iterator iter=thisBankNode->begin(); iter!=thisBankNode->end(); iter++)
+    {
+      const evioDOMNodeP node = *iter;
+      if(node->isContainer())
+	{
+	  evioDOMNodeList *variablesNodes = node->getChildList();
+	  for(evioDOMNodeList::const_iterator cIter=variablesNodes->begin(); cIter!=variablesNodes->end(); cIter++)
+	    {
+	      const evioDOMNodeP variable = *cIter;
+	      int vnum = variable->num;
+	      for(unsigned i=0; i<sizeOfBank; i++)
+		{
+		  if(bank.gid[i] == vnum && variable->isLeaf() && bank.name[i] == "pid")
+		    {
+		      const vector<int> *vec = (*cIter)->getVector<int>();
+		      for(unsigned int h=0; h<vec->size(); h++) pid.push_back((*vec)[h]);
+		    }
+		  if(bank.gid[i] == vnum && variable->isLeaf() && bank.name[i] == "tid")
+		    {
+		      const vector<int> *vec = (*cIter)->getVector<int>();
+		      for(unsigned int h=0; h<vec->size(); h++) tid.push_back((*vec)[h]);
+		    }
+		  if(bank.gid[i] == vnum && variable->isLeaf() && bank.name[i] == "mtid")
+		    {
+		      const vector<int> *vec = (*cIter)->getVector<int>();
+		      for(unsigned int h=0; h<vec->size(); h++) mtid.push_back((*vec)[h]);
+		    }
+		  if(bank.gid[i] == vnum && variable->isLeaf() && bank.name[i] == "trackE")
+		    {
+		      const vector<double> *vec = (*cIter)->getVector<double>();
+		      for(unsigned int h=0; h<vec->size(); h++) trackE.push_back((*vec)[h]);
+		    }
+		  if(bank.gid[i] == vnum && variable->isLeaf() && bank.name[i] == "px")
+		    {
+		      const vector<double> *vec = (*cIter)->getVector<double>();
+		      for(unsigned int h=0; h<vec->size(); h++) px.push_back((*vec)[h]);
+		    }
+		  if(bank.gid[i] == vnum && variable->isLeaf() && bank.name[i] == "py")
+		    {
+		      const vector<double> *vec = (*cIter)->getVector<double>();
+		      for(unsigned int h=0; h<vec->size(); h++) py.push_back((*vec)[h]);
+		    }
+		  if(bank.gid[i] == vnum && variable->isLeaf() && bank.name[i] == "pz")
+		    {
+		      const vector<double> *vec = (*cIter)->getVector<double>();
+		      for(unsigned int h=0; h<vec->size(); h++) pz.push_back((*vec)[h]);
+		    }
+		  if(bank.gid[i] == vnum && variable->isLeaf() && bank.name[i] == "vx")
+		    {
+		      const vector<double> *vec = (*cIter)->getVector<double>();
+		      for(unsigned int h=0; h<vec->size(); h++) vx.push_back((*vec)[h]);
+		    }
+		  if(bank.gid[i] == vnum && variable->isLeaf() && bank.name[i] == "vy")
+		    {
+		      const vector<double> *vec = (*cIter)->getVector<double>();
+		      for(unsigned int h=0; h<vec->size(); h++) vy.push_back((*vec)[h]);
+		    }
+		  if(bank.gid[i] == vnum && variable->isLeaf() && bank.name[i] == "vz")
+		    {
+		      const vector<double> *vec = (*cIter)->getVector<double>();
+		      for(unsigned int h=0; h<vec->size(); h++) vz.push_back((*vec)[h]);
+		    }
+		}
+	    }
+	}
+    }
+		
+  for(unsigned p=0; p<pid.size(); p++)
+    {
+      ancestorInfo part;
+      
+      part.pid = pid[p];
+      part.tid = tid[p];
+      part.mtid = mtid[p];
+      part.trackE = trackE[p];
+      part.p      = G4ThreeVector(px[p], py[p], pz[p]);
+      part.vtx    = G4ThreeVector(vx[p], vy[p], vz[p]);
+      
+      trajs.push_back(part);
+    }
+  
+  return trajs;
+}
+
+
 
 
 
