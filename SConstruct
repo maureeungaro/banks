@@ -7,6 +7,9 @@ lib_sources     = Split("""src/banks.cc""")
 
 lbanks = env.Library(source = lib_sources, target = 'lib/banks' )
 
+# adding tbb by hand, somehow ROOT missed this in 6.18.04
+env.Append(LIBS = ['tbb'])
+
 # Various executables
 
 eviodump  = env.Program(source = Split("""src/evioDump.cc         src/bank_options.cc"""),            target = 'bin/evioDump' )
