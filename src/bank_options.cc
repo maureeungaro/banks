@@ -53,12 +53,7 @@ void goptions::setGoptions()
 	optMap["BANK_VERBOSITY"].ctgr = "verbosity";
 	
 	
-	optMap["WRITE_RAWS"].args = "yes";
-	optMap["WRITE_RAWS"].help = "Write raw banks option: yes or no. Default: yes";
-	optMap["WRITE_RAWS"].name = "Write raw banks option: yes or no. Default: yes";
-	optMap["WRITE_RAWS"].type = 1;
-	optMap["WRITE_RAWS"].ctgr = "io";
-	
+
 	// IO
 	optMap["INPUTF"].args = "na";
 	optMap["INPUTF"].help = "Input File";
@@ -73,18 +68,23 @@ void goptions::setGoptions()
 	optMap["B"].type = 1;
 	optMap["B"].ctgr = "io";
 
+	optMap["R"].args = "no";
+	optMap["R"].help = "Raw Bank(s) to be published";
+	optMap["R"].name = "Raw Bank(s) to be published";
+	optMap["R"].type = 1;
+	optMap["R"].ctgr = "io";
+
 	optMap["ADDEVN"].arg  = 0;
 	optMap["ADDEVN"].help = "Add a number to the event number: default is 0. Useful for chaining root files while keeping track of event number.";
 	optMap["ADDEVN"].name = "Add a number to the event number.";
 	optMap["ADDEVN"].type = 0;
 	optMap["ADDEVN"].ctgr = "io";
 
-	
 	// Max Number of events
 	optMap["N"].arg  = 0;
 	optMap["N"].help = "Max number of events to be processed";
 	optMap["N"].name = "Max number of events to be processed";
-	optMap["N"].type = 1;
+	optMap["N"].type = 0;
 	optMap["N"].ctgr = "io";
 	
 	// Max Number of events
@@ -93,6 +93,14 @@ void goptions::setGoptions()
 	optMap["SELECT_RAW_VARiABLES"].name = "True info variables to be written out, separated by colon.";
 	optMap["SELECT_RAW_VARiABLES"].type = 1;
 	optMap["SELECT_RAW_VARiABLES"].ctgr = "io";
+
+
+	// require raw and dgt to have the same number of entries
+	optMap["SYNCRAWDGT"].arg  = 0;
+	optMap["SYNCRAWDGT"].help = "Requires raw and dgt to have the same number of entries";
+	optMap["SYNCRAWDGT"].name = "Requires raw and dgt to have the same number of entries";
+	optMap["SYNCRAWDGT"].type = 0;
+	optMap["SYNCRAWDGT"].ctgr = "io";
 
 }
 

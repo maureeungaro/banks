@@ -1,3 +1,13 @@
+6/18/20
+- added option SYNCRAWDGT to request that raw and dgt vectors have the same size
+- replaced option WRITE_RAWS with option R, where one can specify which raw bank to write to disk.
+  For example:
+
+	./bin/evio2root -B=dc -INPUTF=input.ev          << will only write the digitized dc bank
+	./bin/evio2root -B=dc -R=dc -INPUTF=input.ev    << will write both digitized and raw option for dc
+
+
+
 1/31/19
 - converting ancestor bank (work by R. Holmes)
 
