@@ -19,7 +19,10 @@ using namespace std;
 #include "banks.h"
 #include "rootTrees.h"
 
-
+// disclaimer:
+// this is quite bad code, with functions defined in the gemc source code,
+// old for loops, and not uniform calls. Some variables are treated a bit differently.
+// this is bad but I'm not fixing it 100% because 1: no time and 2: this code will be obsolete when gemc3 will come out
 
 int main(int argc, char **argv)
 {
@@ -50,7 +53,13 @@ int main(int argc, char **argv)
 		// list of banks
 		string banklist    = gemcOpt.optMap["B"].args ;
 
-		vector<string> userBankList    = getStringVectorFromStringWithDelimiter(banklist, " ");
+		vector<string> userBankFileList    = getStringVectorFromStringWithDelimiter(banklist, " ");
+		vector<string> userBankList    ;
+		for(auto &bankFile: userBankFileList) {
+			string bank = bankFile.substr(bankFile.find_last_of("/") + 1);
+			userBankList.push_back(bank);
+		}
+
 		vector<string> userRawBankList = getStringVectorFromStringWithDelimiter(gemcOpt.optMap["R"].args, " ");
 
 		// list of true info variables
@@ -70,6 +79,8 @@ int main(int argc, char **argv)
 		for(unsigned b=0; b<whichSystems.size(); b++) {
 			allSystems[whichSystems[b]] = factories;
 		}
+
+
 
 		map<string, gBank> banksMap = read_banks(gemcOpt, allSystems);
 
