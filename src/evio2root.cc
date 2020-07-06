@@ -50,8 +50,8 @@ int main(int argc, char **argv)
 		// list of banks
 		string banklist    = gemcOpt.optMap["B"].args ;
 
-		vector<string> userBankList    = getStringVectorFromStringWithDelimiter(banklist, ",");
-		vector<string> userRawBankList = getStringVectorFromStringWithDelimiter(gemcOpt.optMap["R"].args, ",");
+		vector<string> userBankList    = getStringVectorFromStringWithDelimiter(banklist, " ");
+		vector<string> userRawBankList = getStringVectorFromStringWithDelimiter(gemcOpt.optMap["R"].args, " ");
 
 		// list of true info variables
 		bool writeAll = false;
