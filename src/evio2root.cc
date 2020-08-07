@@ -60,6 +60,10 @@ int main(int argc, char **argv)
 			userBankList.push_back(bank);
 		}
 
+		for(auto &bank: userBankList) {
+			cout << " Bank found: " << bank << endl;
+		}
+
 		vector<string> userRawBankList = getStringVectorFromStringWithDelimiter(gemcOpt.optMap["R"].args, " ");
 
 		// list of true info variables
@@ -73,14 +77,13 @@ int main(int argc, char **argv)
 		string factories = "TEXT";
 		
 		// loading veriables definitions from factories db
-		vector<string> whichSystems = get_strings_except(banklist, "all");
+		vector<string> whichSystems = get_strings_except(banklist, " all");
 		map<string, string> allSystems;
 		
 		for(unsigned b=0; b<whichSystems.size(); b++) {
+			cout << " Bank file to be loaded: " << whichSystems[b] << endl;
 			allSystems[whichSystems[b]] = factories;
 		}
-
-
 
 		map<string, gBank> banksMap = read_banks(gemcOpt, allSystems);
 
