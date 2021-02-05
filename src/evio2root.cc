@@ -52,23 +52,40 @@ int main(int argc, char **argv)
 
 		// list of banks
 		string banklist    = gemcOpt.optMap["B"].args ;
+		vector<string> userBankList    = getStringVectorFromStringWithDelimiter(banklist, " ");
+// 		vector<string> userBankList    ;
+// 		for(auto &bankFile: userBankFileList) {
+// 			string bank = bankFile.substr(bankFile.find_last_of("/") + 1);
+// 			userBankList.push_back(bank);
+// 		}
 
-		vector<string> userBankFileList    = getStringVectorFromStringWithDelimiter(banklist, " ");
-		vector<string> userBankList    ;
-		for(auto &bankFile: userBankFileList) {
-			string bank = bankFile.substr(bankFile.find_last_of("/") + 1);
-			userBankList.push_back(bank);
-		}
-
+		//add more default bank
+		userBankList.push_back("mirror");
+		userBankList.push_back("counter");
+		userBankList.push_back("chargeTime");
+		userBankList.push_back("rf");
+		userBankList.push_back("allraws");
+		userBankList.push_back("flux");		
+		
+		cout << " Bank found: " << "header" << endl;
+		cout << " Bank found: " << "userHeader" << endl;
+		cout << " Bank found: " << "generated" << endl;		
+		cout << " Bank found: " << "ancestors" << endl;				
+		
 		for(auto &bank: userBankList) {
 			cout << " Bank found: " << bank << endl;
 		}
 
 		vector<string> userRawBankList = getStringVectorFromStringWithDelimiter(gemcOpt.optMap["R"].args, " ");
-
+		userRawBankList.push_back("flux");	
+		
+		for(auto &bank: userRawBankList) {
+			cout << " Raw Bank found: " << bank << endl;
+		}		
+		
 		// list of true info variables
 		bool writeAll = false;
-		vector<string> trueInfoVariables = getStringVectorFromStringWithDelimiter(gemcOpt.optMap["SELECT_RAW_VARiABLES"].args, ":") ;
+		vector<string> trueInfoVariables = getStringVectorFromStringWithDelimiter(gemcOpt.optMap["SELECT_RAW_VARIABLES"].args, ":") ;
 		if(find(trueInfoVariables.begin(), trueInfoVariables.end(), "all") != trueInfoVariables.end()) {
 			writeAll = true;
 		}
@@ -77,7 +94,8 @@ int main(int argc, char **argv)
 		string factories = "TEXT";
 		
 		// loading veriables definitions from factories db
-		vector<string> whichSystems = get_strings_except(banklist, " all");
+		vector<string> whichSystems = get_strings_except(gemcOpt.optMap["Bfile"].args, " ");		
+// 		vector<string> whichSystems = get_strings_except(banklist, " ");
 		map<string, string> allSystems;
 		
 		for(unsigned b=0; b<whichSystems.size(); b++) {
@@ -126,7 +144,7 @@ int main(int argc, char **argv)
 		for (unsigned i=0; i<banksMap["ancestors"].name.size(); i++) {
 			rTrees["ancestors"].addVariable(banksMap["ancestors"].name[i], banksMap["ancestors"].type[i]);
 		}
-		
+				
 		// hit banks definitions
 		for(map<string, gBank>::iterator it = banksMap.begin(); it != banksMap.end(); it++) {
 
