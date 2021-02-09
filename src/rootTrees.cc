@@ -79,7 +79,7 @@ void rTree::fill()
 // does the right thing and add an empty entry
 // to the tree if nothing there.
 
-	if(weGotSomething)
+//	if(weGotSomething)
 		tree->Fill();
 		
 //	else
