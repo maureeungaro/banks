@@ -53,22 +53,22 @@ int main(int argc, char **argv)
 		// list of banks
 		string banklist    = gemcOpt.optMap["B"].args ;
 
-		vector<string> userBankFileList    = getStringVectorFromStringWithDelimiter(banklist, " ");
-		vector<string> userBankList    ;
-		for(auto &bankFile: userBankFileList) {
-			string bank = bankFile.substr(bankFile.find_last_of("/") + 1);
-			userBankList.push_back(bank);
-		}
-
-		for(auto &bank: userBankList) {
-			cout << " Bank found: " << bank << endl;
-		}
+// 		vector<string> userBankFileList    = getStringVectorFromStringWithDelimiter(banklist, " ");
+// 		vector<string> userBankList    ;
+// 		for(auto &bankFile: userBankFileList) {
+// 			string bank = bankFile.substr(bankFile.find_last_of("/") + 1);
+// 			userBankList.push_back(bank);
+// 		}
+// 
+// 		for(auto &bank: userBankList) {
+// 			cout << " Bank found: " << bank << endl;
+// 		}
 
 		vector<string> userRawBankList = getStringVectorFromStringWithDelimiter(gemcOpt.optMap["R"].args, " ");
-
+		
 		// list of true info variables
 		bool writeAll = false;
-		vector<string> trueInfoVariables = getStringVectorFromStringWithDelimiter(gemcOpt.optMap["SELECT_RAW_VARiABLES"].args, ":") ;
+		vector<string> trueInfoVariables = getStringVectorFromStringWithDelimiter(gemcOpt.optMap["SELECT_RAW_VARIABLES"].args, ":") ;
 		if(find(trueInfoVariables.begin(), trueInfoVariables.end(), "all") != trueInfoVariables.end()) {
 			writeAll = true;
 		}
@@ -141,7 +141,7 @@ int main(int argc, char **argv)
 			if(thisBankName == "raws")       defineBank = false;
 			if(thisBankName == "psummary")   defineBank = false;
 
-			if(find(userBankList.begin(), userBankList.end(), thisBankName) == userBankList.end())   defineBank = false;
+// 			if(find(userBankList.begin(), userBankList.end(), thisBankName) == userBankList.end())   defineBank = false;
 
 			bool defineRawBank = true;
 			if(find(userRawBankList.begin(), userRawBankList.end(), thisBankName) == userRawBankList.end()) defineRawBank = false;
@@ -175,6 +175,8 @@ int main(int argc, char **argv)
 
 		}
 		
+				
+		
 		// now filling the banks
 		// ---------------------
 		
@@ -192,6 +194,7 @@ int main(int argc, char **argv)
 		
 		while(chan->read() && (evn++ <= MAXN || MAXN == 0)) {
 			evioDOMTree EDT(chan);
+			if (evn<-1) continue;			
 			
 			// read all defined banks
 			for(map<string, gBank>::iterator it = banksMap.begin(); it != banksMap.end(); it++) {
@@ -327,13 +330,12 @@ int main(int argc, char **argv)
 						}
 					}
 
-					rTrees[thisBankName].fill();
+					rTrees[thisBankName].filluser();
 
 
 				}
 			}
 		}
-
 		chan->close();
 		f->Write();
 		delete f;
