@@ -38,6 +38,7 @@ class rTree
 		bool weGotSomething;
 		void init();
 		void fill();
+		void filluser();
 		void fillVoid();
 
 };

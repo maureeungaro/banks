@@ -63,8 +63,8 @@ void goptions::setGoptions()
 	
 	// IO
 	optMap["B"].args = "all";
-	optMap["B"].help = "Bank(s) to be published";
-	optMap["B"].name = "Bank(s) to be published";
+	optMap["B"].help = "User bank files with banks to be published";
+	optMap["B"].name = "User bank files with banks to be published";
 	optMap["B"].type = 1;
 	optMap["B"].ctgr = "io";
 
@@ -88,11 +88,11 @@ void goptions::setGoptions()
 	optMap["N"].ctgr = "io";
 	
 	// Max Number of events
-	optMap["SELECT_RAW_VARiABLES"].args  = "all";
-	optMap["SELECT_RAW_VARiABLES"].help = "True info variables to be written out, separated by colon.";
-	optMap["SELECT_RAW_VARiABLES"].name = "True info variables to be written out, separated by colon.";
-	optMap["SELECT_RAW_VARiABLES"].type = 1;
-	optMap["SELECT_RAW_VARiABLES"].ctgr = "io";
+	optMap["SELECT_RAW_VARIABLES"].args  = "all";
+	optMap["SELECT_RAW_VARIABLES"].help = "True info variables to be written out, separated by colon.";
+	optMap["SELECT_RAW_VARIABLES"].name = "True info variables to be written out, separated by colon.";
+	optMap["SELECT_RAW_VARIABLES"].type = 1;
+	optMap["SELECT_RAW_VARIABLES"].ctgr = "io";
 
 
 	// require raw and dgt to have the same number of entries

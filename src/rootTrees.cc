@@ -79,13 +79,23 @@ void rTree::fill()
 // does the right thing and add an empty entry
 // to the tree if nothing there.
 
-//	if(weGotSomething)
+	if(weGotSomething)
 		tree->Fill();
 		
 //	else
 //		fillVoid();
 }
 
+void rTree::filluser()
+{
+// commenting the condition out cause ROOT
+// does the right thing and add an empty entry
+// to the tree if nothing there.
+
+//  	if(weGotSomething){
+ 		tree->Fill();
+
+}
 
 void rTree::init()
 {
