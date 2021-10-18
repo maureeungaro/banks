@@ -1,6 +1,7 @@
 from init_env import init_environment
 
-env = init_environment("qt5 clas12 clhep evio root geant4 xercesc mlibrary")
+env = init_environment("qt5 clas12 clhep evio root geant4 xercesc mlibrary hipo")
+env.Append(CXXFLAGS = ' -std=c++17 ')
 
 # library
 lib_sources     = Split("""src/banks.cc""")
