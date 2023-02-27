@@ -1,13 +1,9 @@
 from init_env import init_environment
 
 import os
-ROOTSYS = os.environ['ROOTSYS']
 
-env = init_environment("qt5 clas12 clhep evio root geant4 xercesc mlibrary hipo")
-env.Append(CXXFLAGS = ' -std=c++11 ')
-
-if env['PLATFORM'] != 'darwin':
-	env.Append(RPATH = ROOTSYS + '/lib')
+env = init_environment("qt5 clas12 clhep evio root geant4 xercesc mlibrary hipo ccdb")
+env.Append(CXXFLAGS = ' -std=c++14 ')
 
 # library
 lib_sources     = Split("""src/banks.cc""")
